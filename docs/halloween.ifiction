@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ifindex version="1.0" xmlns="http://babel.ifarchive.org/protocol/iFiction/">
+    <story>
+        <identification>
+            <ifid>56CAFD8D-D250-4746-AC89-17723A3CEDB9</ifid>
+            <format>html</format>
+        </identification>
+        <bibliographic>
+            <title>Halloween</title>
+            <author>Baltasar</author>
+            <language>ES</language>
+            <headline>Asesinato en víspera de todos los santos.</headline>
+            <genre>horror</genre>
+            <forgiveness>polite</forgiveness>
+            <description>La víspera de todos los santos, con todo su despliegue de disfraces y extrañas costumbres, será la noche elegida para un macabro asesinato.</description>
+        </bibliographic>
+        <contacts>
+            <authoremail>baltasarq@gmail.com</authoremail>
+            <url>http://caad.es/</url>
+        </contacts>
+        <release>
+            <version>1</version>
+            <releasedate>2022/10/06</releasedate>
+        </release>
+        <colophon>
+            <generator>Babble</generator>
+            <originated>2022/10/06</originated>
+        </colophon>
+    </story>
+</ifindex>

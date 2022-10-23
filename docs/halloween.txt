@@ -1,0 +1,83 @@
+
+! Halloween.txt (c) Oct 2022 Baltasar MIT License <baltasarq@gmail.com>
+
+Estudio
+.grf "res/apartment.jpg"
+^{Casas q.ue resultan frías y grises, esas líneas modernas que parecen expulsar el alma de cualquier habitación. }Tu estudio no es una excepción en esta corriente mdoernista. Un ${sofá, ex sofa}, una ${mesa, ex mesa}, una ${cocina}, un ${armario, ex armario} y ${una cama} es todo lo que te rodea. Puedes ${salir a la calle}.
+
+> ex sofa
+Un pequeño sofá de apenas dos plazas con asientos extensibles.
+
+> ex mesa
+Mesa de centro, cuyo ${tablero se levanta, abre mesa} y puede hacer las veces de mesa de estudio.
+
+> ex cocina
+^{Una de estas mini-cocinas con todo encastrado más un mesado encima. Todos los electrodomésticos son pequeñas versiones de los normales. }Se alinean una ${nevera, ex nevera}, un ${microondas, ex microondas} y unos ${fogones}.
+
+> ex nevera
+Parece un mini-bar, pero se puede ${abrir, abre nevera}.
+
+> ex microondas
+Minúsculo. ${La puerta, abre microondas} es ahumada.
+
+> ex fogones
+Siempre los limpias tras cocinar.
+
+> ex cama
+Siempre hecha tras dormir. En una casa así, no se puede ser desordenado.
+
+> ex armario
+^{Se trata de un armario empotrado. } Puede {abrirse, abre armario}.
+
+> n
+
+Calle
+.grf "res/street.jpg"
+^{La gente pasea animada por la calle, llevando sus disfraces, ocultos tras sus tapaderas. Todo son aparentemente risas y diversión. }La calle discurre de ${este, oeste}, hacia un descampado, a ${oeste, oeste}, hacia una plaza. Puedes ver ${adultos, ex adultos} y ${niños, ex ninos}.
+
+> ex adultos
+^{La gente parece divertirse a tu alrededor. Te sientes aislado, una rareza entre muchos otros. }Los adultos en general acompañan a los ${niños, ex ninos}, solo algunos parecen buscar diversión, en pareja o pequeñas pandillas.
+
+> ex ninos
+Los ninos acompañados por ${adultos, ex adultos} portan sus bolsas de caramelos.
+
+> e a Plaza
+
+> o
+
+Descampado
+.grf "res/pump_station.jpg"
+^{Hace mucho tiempo que habían prometido un centro comercial aquí... pero solo está la gasolinera de siempre. }Más allá de las luces de las farolas sabes que se extiende el resto de la ciudad, aunque desde aquí no puedas verla. Solo puedes volver al {final de la calle al oeste, o}.
+
+> ex farolas
+Tenues halos de luz que apenas horadan la oscuridad más allá.
+
+> ex gasolinera
+La gasolinera se mantiene cerrada, si bien hay ${una ventanilla, ex ventanilla} desde la que es posible hablar con el vendedor.
+
+> ex vendedor
+Se le percibe una expresión somnolienta tras la ventanilla, obviamente esperando a que te decidas a decir algo.
+
+.end
+
+Plaza
+.grf "res/town_square.jpg"
+
+^{Se te antoja desnuda y fría. }${La gente, ex gente} se mueve cerca de sus extremos, donde se sitúan también varios ${negocios, ex negocios}. Hay un ${fuente, ex fuente} en el centro, semioculta en la oscuridad pese a los ${faroles colgantes, ex faroles}.
+
+> ex faroles
+Cuelgan de cuerdas tendidas entre los árboles.
+
+> ex fuente
+La fuente se sitúa en el centro. Sabes que el agua no sabe demasiado bien.
+
+> ex gente
+Entran y salen de casas con niños, o bien conversan animadamente en ${cafeterías, ex cafes}.
+
+> ex negocios
+Excepto las ${cafeterías, ex cafes}, todos los negocios han cerrado ya.
+
+> ex cafes
+Hay varios abiertos en los extremos de la plaza, con animada afluencia de un variado elenco de disfrazados personajes.
+
+> o a Calle
