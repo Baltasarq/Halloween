@@ -1368,7 +1368,7 @@ npcMark.preAttack = function() {
                       por mirar a lo que ha quedado de él. Y sonríes.";
         }
         
-        endGame( toret );
+        endGame( toret, hasLever && hasCostume );
         toret = "";
     }
     
@@ -1560,23 +1560,30 @@ player.postAction = function() {
     this.updateCmdObjs();
 };
  
-endGame = function(msg)
+endGame = function(msg, won)
 {
     const dvCmds = document.getElementById( "dvCmds" );
     
     dvCmds.style.display = "none";
+
+    if ( arguments.length < 2 ) {
+        won = false;
+    }
+
+    if ( won ) {
+        msg += "<details style='text-align: right'><summary>Curiosidades</summary>";
+        msg += "<p>Este relato de terror está inspirado en la película \
+                'Veneciafrenia' de Álex de la Iglesia. En este film, \
+                en cierta escena (cuidado, <i>spoilers</i>), cierto \
+                personaje disfrazado asesina a un simple turista mientras \
+                la gente le vitorea pensando que es un montaje de carnaval. \
+                La escena me pareció absolutamente terrorífica, \
+                no por el hecho en sí, sino por la idea de un asesinato \
+                con público aplaudiendo. Si he conseguido plasmarlo aquí, \
+                fantástico, esa era la intención. Gracias por jugar.</p>";
+        msg += "</details>";
+    }
     
-    msg += "<details style='text-align: right'><summary>Curiosidades</summary>";
-    msg += "<p>Este relato de terror está inspirado en la película \
-            'Veneciafrenia' de Álex de la Iglesia. En este film, \
-            en cierta escena (cuidado, <i>spoilers</i>), cierto \
-            personaje disfrazado asesina a un simple turista mientras \
-            la gente le vitorea pensando que es un montaje de carnaval. \
-            La escena me pareció absolutamente terrorífica, \
-            no por el hecho en sí, sino por la idea de un asesinato \
-            con público aplaudiendo. Si he conseguido plasmarlo aquí, \
-            fantástico, esa era la intención. Gracias por jugar.</p>";
-    msg += "</details>";
     msg += "<p style='text-align: right'>";
     msg += "<a href='javascript: window.location.reload();'>\
             Jugar de nuevo</a></p>";
