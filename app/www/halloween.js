@@ -17,7 +17,7 @@ const locVacantLot = ctrl.places.creaLoc(
      tras la misma ${gasolinera, ex gasolinera}, \
      sabes que se extiende el resto de la ciudad, \
      aunque desde aquí no puedas verla. \
-     <br/>Solo puedes volver al ${final de tu calle, este}."
+     <br/>Puedes volver al ${final de tu calle, este}."
 );
 
 locVacantLot.ini = function() {
@@ -83,11 +83,7 @@ objPumpStation.ini = function() {
     };
 
     this.preStart = function() {
-        return "Tiene luces encendidas a pleno rendimiento.";
-    };
-
-    this.preWear = function() {
-        return "Mmm... no, eso no...";
+        return "Ya tiene las luces encendidas a pleno rendimiento.";
     };
 
     this.prePush = function() {
@@ -97,6 +93,17 @@ objPumpStation.ini = function() {
     this.preAttack = function() {
         return "La gasolinera no me ha hecho nada. Es ese 'otro'...";
     };
+};
+
+objPumpStation.preExamine = function() {
+    const toret = this.desc;
+    
+    if ( this.getTimesExamined() == 0 ) {
+        locVacantLot.desc += " El edificio puede ${rodearse, n} hasta la parte trasera.";
+        ctrl.places.doDesc();
+    }    
+    
+    return toret;
 };
 
 objSellerPost = ctrl.creaObj(
@@ -394,7 +401,7 @@ objLever.ini = function() {
     this.preWear =
     this.prePush =
     this.preOpen = function() {
-        return "No tiene sentido;";
+        return "No tiene sentido.";
     };
 
     this.preStart = function() {
@@ -524,19 +531,32 @@ objShopWindow.preAttack = function() {
     if ( !this.broken ) {
         toret = "Le pegas una patada, con ganas. ¡Pero aguanta!";
 
-        if ( player.has( objStone ) )
+        if ( ctrl.isPresent( objStone )
+          || ctrl.isPresent( objLever ) )
         {
+            let tool = null;
             this.broken = true;
-            toret = "Utilizando la piedra y todas tus fuerzas... \
+            
+            if ( ctrl.isPresent( objStone ) ) {
+                tool = objStone;
+            }
+            else
+            if ( ctrl.isPresent( objLever ) ) {
+                tool = objLever;
+            }
+            
+            toret = "Utilizando la " + tool.id + " y todas tus fuerzas... \
                      ¡golpeas el cristal del escaparate, una vez \
                      y otra, hasta que consigues abrir una brecha \
-                     en el cristal laminado! Concentrado en lo que \
-                     haces, la piedra ha salido disparada de tu mano \
-                     hacia el interior.</p><p>Te das la vuelta para \
+                     en el cristal laminado! Concentrado en lo que haces, \
+                     la " + tool.id + " ha salido disparada de tu mano \
+                     hacia el interior. \
+                     Ahora hasta se puede ${pasar, n} a la tienda.</p>\
+                     <p>Te das la vuelta para \
                      comprobar que, entre tanta algarabía, \
-                     nadie parece haber visto nada.\
-                     Ahora hasta se puede ${pasar, n} al interior.</p>";
-            objStone.moveTo( locCostumesShop );
+                     nadie parece haber visto nada.";
+                     
+            tool.moveTo( locCostumesShop );
         }
     }
 
@@ -592,8 +612,8 @@ const objAccessories = ctrl.creaObj(
     "accesorios",
     [ "antifaz", "antifaces", "mascara",
       "mascaras", "complementos", "complemento", "accesorio" ],
-    "Antifaces y máscaras de todo tipo, además de todo tipo \
-     de accesorios.",
+    "Antifaces y máscaras de todo tipo, además de otros numerosos \
+     accesorios.",
     locCostumesShop,
     Ent.Scenery
 );
@@ -740,6 +760,27 @@ locApartment.postExamine = function() {
     return;
 };
 
+const objPants = ctrl.creaObj(
+    "pantalones",
+    [ "pantalon" ],
+    "Tus otros pantalones.",
+    ctrl.places.limbo,
+    Ent.Portable
+);
+
+objPants.preTake = function() {
+    let toret = "Coges los pantalones, hechos un gurruño.";
+    
+    if ( ctrl.places.limbo.has( objCard ) ) {
+        objCard.moveTo( this.owner );
+        ctrl.places.doDesc();
+        toret = "De alguno de sus bolsillos cae ${una tarjeta, coge tarjeta}.";
+    }
+    
+    objPants.moveTo( ctrl.personas.getPlayer() );
+    return toret;  
+};
+
 const objCupboard = ctrl.creaObj(
     "armario",
     [ "armario" ],
@@ -771,10 +812,10 @@ objCupboard.ini = function() {
 objCupboard.preOpen = function() {
     let toret = "El armario no tiene nada más de interés.";
     
-    if ( ctrl.places.limbo.has( objCard ) ) {
-        objCard.moveTo( this.owner );
+    if ( ctrl.places.limbo.has( objPants ) ) {
+        objPants.moveTo( this.owner );
         ctrl.places.doDesc();
-        toret = "De su interior cae ${una tarjeta, coge tarjeta}.";
+        toret = "En su interior hay ${un pantalon, coge pantalon}.";
     }
     
     return toret;
@@ -953,6 +994,8 @@ objTable.preOpen = function() {
     if ( ctrl.places.limbo.has( objPen ) ) {
         objPen.moveTo( this.owner );
         objNote.moveTo( this.owner );
+        ctrl.places.doDesc();
+        
         toret += "</p><p>Hay una ${nota, ex nota} y un \
                   ${bolígrafo, ex boli} encima de ella.</p>";
     }
@@ -967,8 +1010,8 @@ const objNote = ctrl.creaObj(
     ctrl.places.limbo
 );
 
-objNote.preTake = function() {
-    return "¿Para qué? No olvidarás lo que pone.";
+objNote.preDrop = function() {
+    return "¿E ir dejando notas acusatorias por ahi...? Mejor que no.";
 };
 
 objNote.ini = function() {
@@ -980,7 +1023,7 @@ objNote.ini = function() {
     this.preOpen =
     this.prePush =
     this.preAttack = function() {
-        return "No tendría nada de sentido.";
+        return "No tendría ningun sentido.";
     };
 };
 
@@ -1003,7 +1046,7 @@ objNote.ini = function() {
     this.preOpen =
     this.prePush =
     this.preAttack = function() {
-        return "No tendría nada de sentido.";
+        return "No tendría ningun sentido.";
     };
 };
 
@@ -1188,7 +1231,7 @@ objFaroles.ini = function() {
     };
 
     this.preAttack = function() {
-        return "El sofá no me ha hecho nada. Es ese 'otro'...";
+        return "No tengo nada contra esto. Es ese 'otro'...";
     };
 };
 
@@ -1319,7 +1362,7 @@ npcMark.preAttack = function() {
     const hasLever = ctrl.isPresent( objLever );
     const hasCostume = player.has( objJasonCostume )
                     && objJasonCostume.isWorn();
-    let toret = "Sabes que no podrías hacerlo solo con las manos.";
+    let toret = "Sabes que no podrías hacerlo asi...Necesitas algo apropiado.";
                     
     if ( hasLever ) {
         toret = "Alzas la palanca por encima de tu cabeza... \
