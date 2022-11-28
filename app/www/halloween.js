@@ -1362,7 +1362,7 @@ npcMark.preAttack = function() {
     const hasLever = ctrl.isPresent( objLever );
     const hasCostume = player.has( objJasonCostume )
                     && objJasonCostume.isWorn();
-    let toret = "Sabes que no podrías hacerlo asi...Necesitas algo apropiado.";
+    let toret = "Sabes que no podrías hacerlo así... Necesitas algo apropiado.";
                     
     if ( hasLever ) {
         toret = "Alzas la palanca por encima de tu cabeza... \
@@ -1560,6 +1560,24 @@ npcPumpStationDog.preTalk = function() {
     return "No parece una buena idea ni acercarse a él.";
 };
 
+npcPumpStationDog.preAttack = function() {
+    endGame( "Decides que tu objetivo es demasiado importante, \
+              y ese perro demasiado prescindible.</p>\
+              <p>Te preparas para asestar un golpe, \
+              un solo golpe que prevees ser&aacute; mortal.</p>\
+              <p>Lamentablemente, al menos para ti, \
+              el perro no est&aacute; de acuerdo. \
+              El mero alzamiento de tu brazo provoca que el perro \
+              se prepare para atacar a su vez. Sus fauces se abren \
+              peligrosamente, goteando saliva, mientras sus ojos \
+              se fijan en ti, y su musculatura se tensa.</p>\
+              <p>Sobrevivir&aacute;s, de alguna forma, al ataque del perro, \
+              pero nunca querr&aacute;s recordar lo que ocurri&oacute; \
+              a continuaci&oacute;n.",
+             false,
+             "res/dog.jpg" );  
+};
+
 
 // Boot ----------------------------------------------------------------
 const player = ctrl.personas.creaPersona(
@@ -1603,11 +1621,15 @@ player.postAction = function() {
     this.updateCmdObjs();
 };
  
-endGame = function(msg, won)
+endGame = function(msg, won, pic)
 {
     const dvCmds = document.getElementById( "dvCmds" );
     
     dvCmds.style.display = "none";
+    
+    if ( arguments.length < 3 ) {
+        pic = "res/helloween.jpg";
+    }
 
     if ( arguments.length < 2 ) {
         won = false;
@@ -1631,7 +1653,7 @@ endGame = function(msg, won)
     msg += "<a href='javascript: window.location.reload();'>\
             Jugar de nuevo</a></p>";
     
-    ctrl.endGame( msg, "res/helloween.jpg" );
+    ctrl.endGame( msg, pic );
 }
 
 ctrl.ini = function() {
